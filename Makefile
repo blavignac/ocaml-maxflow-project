@@ -3,7 +3,7 @@
 src?=0
 dst?=5
 graph?=graph1.txt
-
+exportfile?=exportfile.txt
 all: build
 
 build:
@@ -17,11 +17,18 @@ format:
 edit:
 	code . -n
 
+exp: build
+	@echo "\n   🚢  EXPORTING  🚢\n"
+	./ftest.exe graphs/${graph} $(src) $(dst) outfile $(exportfile)
+	@echo "\n   🎆  RESULT (content of exportfile.txt)  🎆\n"
+	@cat $(exportfile)
+
 demo: build
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
-	./ftest.exe graphs/${graph} $(src) $(dst) outfile
+	./ftest.exe graphs/${graph} $(src) $(dst) outfile $(exportfile)
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
 	@cat outfile
+
 
 clean:
 	find -L . -name "*~" -delete

@@ -16,6 +16,29 @@ type path = string
 
 *)
 
+(* --- STUDENT ADDED CODE SECTION --- *)
+
+let export path graph = 
+  let ff = open_out path in
+  (* write header code to file *)
+  fprintf ff 
+  "digraph finite_state_machine {\n
+  fontname=\"Helvetica,Arial,sans-serif\"\n
+  node [fontname=\"Helvetica,Arial,sans-serif\"]\n
+  edge [fontname=\"Helvetica,Arial,sans-serif\"]\n
+  rankdir=LR;\n
+  node [shape = circle];";
+
+  (* write arcs to file in their special formating *)
+  let _ = e_iter graph (fun arc -> fprintf ff "%d -> %d [label = \"%s\"];\n" arc.src arc.tgt arc.lbl) in
+  (* write the end of file *)
+  fprintf ff ";\n";
+
+  close_out ff ;
+  ()
+
+(* --- STUDENT ADDED CODE SECTION --- *)
+
 (* Compute arbitrary position for a node. Center is 300,300 *)
 let iof = int_of_float
 let foi = float_of_int
