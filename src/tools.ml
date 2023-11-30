@@ -10,8 +10,18 @@ let add_arc g id1 id2 n =
     | Some {src;tgt;lbl} -> new_arc g {src;tgt;lbl = lbl + n}
 ;;
 
-let int_arc gr = gmap gr (fun x -> int_of_string x);; 
+let string_to_int_graph gr = gmap gr (fun x -> int_of_string x);; 
 
-let string_arc gr = gmap gr (fun x -> string_of_int x);;
+let int_to_string_graph gr = gmap gr (fun x -> string_of_int x);;
 
-
+let print_path p = 
+  match p with 
+    | []-> Printf.printf "\n\n[]\n\n";
+    | x::rest -> Printf.printf "\n\n[%d" x; 
+      let rec loop p = 
+        match p with
+          | [] -> Printf.printf "]\n\n"
+          | x::rest when rest == [] -> Printf.printf ", %d]\n\n" x
+          | x::rest -> Printf.printf ", %d" x; loop rest
+      in 
+      loop rest;

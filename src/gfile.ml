@@ -32,7 +32,7 @@ let export path graph =
   (* write arcs to file in their special formating *)
   let _ = e_iter graph (fun arc -> fprintf ff "%d -> %d [label = \"%s\"];\n" arc.src arc.tgt arc.lbl) in
   (* write the end of file *)
-  fprintf ff ";\n";
+  fprintf ff "}\n";
 
   close_out ff ;
   ()
