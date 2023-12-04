@@ -18,7 +18,7 @@ type path = string
 
 (* --- STUDENT ADDED CODE SECTION --- *)
 
-let export path graph = 
+let export path graph source sink= 
   let ff = open_out path in
   (* write header code to file *)
   fprintf ff 
@@ -26,9 +26,10 @@ let export path graph =
   fontname=\"Helvetica,Arial,sans-serif\"\n
   node [fontname=\"Helvetica,Arial,sans-serif\"]\n
   edge [fontname=\"Helvetica,Arial,sans-serif\"]\n
-  rankdir=LR;\n
-  node [shape = circle];";
-
+  rankdir=LR;\n";
+  fprintf ff "node [shape = doublecircle]\n; %d %d;" source sink;
+  fprintf ff "node [shape = circle];\n";
+  
   (* write arcs to file in their special formating *)
   let _ = e_iter graph (fun arc -> fprintf ff "%d -> %d [label = \"%s\"];\n" arc.src arc.tgt arc.lbl) in
   (* write the end of file *)

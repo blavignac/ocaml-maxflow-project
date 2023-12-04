@@ -2,7 +2,7 @@
 
 src?=0
 dst?=4
-graph?=graph1.txt
+graph?=graph7.txt
 exportfile?=exportfile.txt
 exportgraph?=exportgraph.svg
 all: build
