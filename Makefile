@@ -1,7 +1,7 @@
 .PHONY: all build format edit demo clean
 
 src?=0
-dst?=5
+dst?=4
 graph?=graph1.txt
 exportfile?=exportfile.txt
 exportgraph?=exportgraph.svg
