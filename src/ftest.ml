@@ -32,14 +32,7 @@ let () =
   (* Open file *)
   let graph = from_file infile in
 
-  (* let graph = Tools.int_to_string_graph (Tools.add_arc (Tools.string_to_int_graph graph) 0 5 11) in
-  let graph = Tools.int_to_string_graph (Tools.add_arc (Tools.string_to_int_graph graph) 2 0 11) in
-  let graph = Tools.int_to_string_graph (Tools.add_arc (Tools.string_to_int_graph graph) 2 3 11) in
-  let graph = Tools.int_to_string_graph (Tools.add_arc (Tools.string_to_int_graph graph) 2 5 11) in
-  let graph = Tools.int_to_string_graph (Tools.add_arc (Tools.string_to_int_graph graph) 2 2 11) in
-  let graph = Tools.int_to_string_graph (Tools.add_arc (Tools.string_to_int_graph graph) 2 1 11) in *)
-
-  let _= Tools.print_path (Fordfulkerson.find_path (Tools.string_to_int_graph graph) _source _sink) in
+  let _= Tools.print_path (Fordfulkerson.find_path graph _source _sink) in
 
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
