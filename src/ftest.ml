@@ -30,10 +30,10 @@ let () =
   
 
   (* Open file *)
-  let graph = from_file infile in
+  let graph = Fordfulkerson.flow_graph (from_file infile) in
 
   let _= Tools.print_path (Fordfulkerson.find_path graph _source _sink) in
-
+  let graph = Fordfulkerson.update_flow graph (Fordfulkerson.find_path graph)
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
   let () = export exportfile graph _source _sink in
