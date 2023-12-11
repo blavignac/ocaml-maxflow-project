@@ -1,7 +1,7 @@
 open Graph
 
 
-val find_path: 'a graph -> id -> id -> 'a arc list;;
+val find_path: string graph -> id -> id -> string arc list;;
 
 val max_flow: string arc list -> int;;
 

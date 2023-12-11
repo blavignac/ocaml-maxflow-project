@@ -7,21 +7,6 @@ path(orig, dest) :-
 
 let flow_graph gr = Tools.gmap gr (fun x -> "0/"^x);;
 
-let find_path graph startNode endNode = 
-  let ll = out_arcs graph startNode in
-  let rec loop visitedList qList = 
-    match qList with
-      | [] -> []
-      | x::_ when (x.tgt = endNode) -> [x]
-      | x::rest when (List.mem x.tgt visitedList) -> loop visitedList rest
-      | x::rest -> let path = loop (x.tgt::visitedList) (out_arcs graph x.tgt) in 
-        match path with 
-          |[] -> loop (x.tgt::visitedList) rest
-          |pl -> x::pl
-  in
-    loop [] ll
-;;
-
 let max_flow ll =
   let rec loop ll max = 
     match ll with
@@ -34,6 +19,22 @@ let max_flow ll =
     | [] -> 0
     | x::rest -> let stl = String.split_on_char '/' x.lbl in
       loop rest ((int_of_string (List.nth stl 1)) - (int_of_string (List.hd stl)))
+;;
+
+let find_path graph startNode endNode = 
+  let ll = out_arcs graph startNode in
+  let rec loop visitedList qList = 
+    match qList with
+      | [] -> []
+      | x::_ when (x.tgt = endNode) -> [x]
+      | x::rest when (List.mem x.tgt visitedList) -> loop visitedList rest
+      | x::rest when (max_flow [x] = 0) -> loop visitedList rest
+      | x::rest -> let path = loop (x.tgt::visitedList) (out_arcs graph x.tgt) in 
+        match path with 
+          |[] -> loop (x.tgt::visitedList) rest
+          |pl -> x::pl
+  in
+    loop [] ll
 ;;
 
 let update_flow gr ll flow =
