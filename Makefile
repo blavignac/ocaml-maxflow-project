@@ -22,9 +22,9 @@ exp: build
 	@echo "\n   🚢  EXPORTING  🚢\n"
 	./ftest.exe graphs/${graph} $(src) $(dst) outfile $(exportfile)
 	@echo "\n   🎆  RESULT (graph displayed on firefox)  🎆\n"
-	@dot -Tsvg $(exportfile) > $(exportgraph)
-	@rm $(exportfile)
-	@firefox $(exportgraph)
+	#@dot -Tsvg $(exportfile) > $(exportgraph)
+	#@rm $(exportfile)
+	#@firefox $(exportgraph)
 
 demo: build
 	@echo "\n   ⚡  EXECUTING  ⚡\n"

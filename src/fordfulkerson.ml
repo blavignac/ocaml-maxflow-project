@@ -22,31 +22,29 @@ let find_path graph startNode endNode =
     loop [] ll
 ;;
 
-let max_flow gr ll =
+let max_flow ll =
   let rec loop ll max = 
     match ll with
       | [] -> max
-      | _::[] -> max
       | x::rest -> 
-        let y = (List.hd rest) in
-          match (find_arc gr x y) with
-            | None -> loop rest 0
-            | Some a -> 
-              let new_max = ((int_of_char a.lbl.[3]) - (int_of_char a.lbl.[0])) in if max > new_max then loop rest new_max else loop rest max
+          let stl = String.split_on_char '/' x.lbl in
+          let new_max = ((int_of_string (List.nth stl 1)) - (int_of_string (List.hd stl))) in if max > new_max then loop rest new_max else loop rest max
   in
-    loop ll 0
+  match ll with
+    | [] -> 0
+    | x::rest -> let stl = String.split_on_char '/' x.lbl in
+      loop rest ((int_of_string (List.nth stl 1)) - (int_of_string (List.hd stl)))
 ;;
 
 let update_flow gr ll flow =
   let rec loop ll gr =
     match ll with
       | [] -> gr
-      | _::[] -> gr
       | x::rest -> 
-        let y = (List.hd rest) in
-          match (find_arc gr x y) with
-          | None -> loop rest gr
-          | Some a -> loop rest (Tools.add_arc gr a.src a.tgt ((string_of_int ((int_of_char a.lbl.[0]) + flow)^String.sub a.lbl 1 2)))
+        match (find_arc gr x.src x.tgt) with
+        | None -> loop rest gr
+        | Some a -> let stl = String.split_on_char '/' a.lbl in
+            loop rest (Tools.add_arc gr a.src a.tgt (String.concat "/" ((string_of_int ((int_of_string (List.hd stl)) + flow))::(List.nth stl 1)::[])))
   in
     loop ll gr
 ;;
