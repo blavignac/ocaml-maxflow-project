@@ -2,7 +2,7 @@
 
 src?=0
 dst?=4
-graph?=graphT.txt
+graph?=test.txt
 exportfile?=exportfile.txt
 exportgraph?=exportgraph.svg
 all: build
@@ -30,7 +30,12 @@ demo: build
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
 	./ftest.exe graphs/${graph} $(src) $(dst) outfile $(exportfile)
 	@echo "\n🥁 END 🥁\n"
+
 clean:
 	find -L . -name "*~" -delete
 	rm -f *.exe
 	dune clean
+
+coloc: build
+	@echo "\n   🚢  MONEY SHARE  🚢\n"
+	./ftest.exe graphs/${graph} 0 1 outfile $(exportfile)

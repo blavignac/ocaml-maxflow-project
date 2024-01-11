@@ -1,0 +1,4 @@
+josh 20
+lilia 5
+leo 0
+remi 50

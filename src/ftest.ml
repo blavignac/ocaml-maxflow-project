@@ -30,9 +30,8 @@ let () =
   
 
   (* Open file *)
-  let graph = Fordfulkerson.flow_graph (from_file infile) in
-  let (graph,flow) = Fordfulkerson.ford_fulkerson graph _source _sink in
-  let _ = Printf.printf "\n\n\n The max flow of this graph is : %d\n\n\n\n" flow in
+  let colocll,_,_ = (Esharing.read_file infile) in 
+  let graph = Esharing.build_graph colocll in
   
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in

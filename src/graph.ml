@@ -80,3 +80,7 @@ let e_iter gr f = List.iter (fun (_, out) -> List.iter f out) gr
 
 let e_fold gr f acu = List.fold_left (fun acu (_, out) -> List.fold_left (fun acu arc -> f acu arc) acu out) acu gr
 
+
+and outfile = Sys.argv.(4)
+
+and exportfile = Sys.argv.(o  

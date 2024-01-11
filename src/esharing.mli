@@ -6,4 +6,6 @@ type coloc =
     value: int }
 ;;
 
-val read_file: path -> (coloc list * coloc list * int);;
+val read_file: path -> (coloc list * int * int);;
+
+val build_graph: coloc list -> 'a graph;;
