@@ -32,7 +32,7 @@ let () =
   (* Open file *)
   let colocll,_,total = (Esharing.read_file infile) in 
   let graph = Esharing.build_graph colocll total in
-  
+  let graph = Esharing.strip_graph graph in
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
   let () = export exportfile graph _source _sink in

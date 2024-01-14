@@ -48,6 +48,19 @@ let _add_in_between graph coloc_list total =
   loop graph coloc_list
 ;;
 
+let strip_graph graph =
+  let graph1 = Graph.n_fold graph (fun g n -> (Printf.printf "wow1 %d" n);if n = 1 || n = 0 then g else Graph.new_node g n) Graph.empty_graph
+in
+  let graph2 = 
+    Graph.e_fold graph (
+      fun g1 {src=id1;tgt=id2;lbl=lbl} -> 
+        let _l = match (String.split_on_char '/' lbl) with
+          | "0"::_ -> 0
+          | _ -> 1
+       in if (_l = 0 ||id1 = 0 || id1 = 1 || id2 = 0 || id2 = 1) then g1 else (Tools.add_arc g1 id1 id2 lbl)
+      ) graph1 in
+graph2
+;;
 let build_graph coloc_list _total = 
   let coloc_list = _update_coloc coloc_list _total in
   let graph = List.fold_left (fun gr {name=_;id;_} -> Graph.new_node gr id) (Graph.new_node (Graph.new_node Graph.empty_graph 0) 1) coloc_list 
