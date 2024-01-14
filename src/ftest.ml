@@ -30,8 +30,8 @@ let () =
   
 
   (* Open file *)
-  let colocll,_,_ = (Esharing.read_file infile) in 
-  let graph = Esharing.build_graph colocll in
+  let colocll,_,total = (Esharing.read_file infile) in 
+  let graph = Esharing.build_graph colocll total in
   
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in

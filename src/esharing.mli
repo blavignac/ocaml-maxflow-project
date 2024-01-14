@@ -8,4 +8,4 @@ type coloc =
 
 val read_file: path -> (coloc list * int * int);;
 
-val build_graph: coloc list -> 'a graph;;
+val build_graph: coloc list -> int -> string graph;;

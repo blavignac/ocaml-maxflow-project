@@ -39,3 +39,6 @@ clean:
 coloc: build
 	@echo "\n   🚢  MONEY SHARE  🚢\n"
 	./ftest.exe graphs/${graph} 0 1 outfile $(exportfile)
+	@echo "\n   🎆  RESULT (graph displayed on firefox)  🎆\n"
+	@dot -Tsvg $(exportfile) > $(exportgraph)
+	@firefox $(exportgraph)
