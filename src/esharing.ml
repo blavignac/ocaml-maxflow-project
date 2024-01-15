@@ -1,3 +1,6 @@
+
+open Printf
+open Graph
 type coloc =
   { name: string ;
     id: int ;
@@ -61,6 +64,31 @@ in
       ) graph1 in
 graph2
 ;;
+
+let _export_coloc path graph coloc_list= 
+  let ff = open_out path in
+  (* write header code to file *)
+  fprintf ff 
+  "digraph finite_state_machine {\n
+  fontname=\"Helvetica,Arial,sans-serif\"\n
+  node [fontname=\"Helvetica,Arial,sans-serif\"]\n
+  edge [fontname=\"Helvetica,Arial,sans-serif\"]\n
+  rankdir=LR;\n";
+  fprintf ff "node [shape = circle];\n";
+  
+  (* write arcs to file in their special formating *)
+  let _ = e_iter graph 
+    (fun arc -> 
+      let src = (List.find (fun {name=_;id=i;value=_;} -> if (i = arc.src) then true else false) coloc_list).name 
+      in 
+      let tgt = (List.find (fun {name=_;id=i;value=_;} -> if i = arc.tgt then true else false) coloc_list).name 
+      in fprintf ff "%s -> %s [label = \"%s\"];\n" src tgt arc.lbl) in
+  (* write the end of file *)
+  fprintf ff "}\n";
+
+  close_out ff ;
+  ()
+
 let build_graph coloc_list _total = 
   let coloc_list = _update_coloc coloc_list _total in
   let graph = List.fold_left (fun gr {name=_;id;_} -> Graph.new_node gr id) (Graph.new_node (Graph.new_node Graph.empty_graph 0) 1) coloc_list 

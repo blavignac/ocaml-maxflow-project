@@ -35,6 +35,6 @@ let () =
   let graph = Esharing.strip_graph graph in
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
-  let () = export exportfile graph _source _sink in
+  let () = Esharing._export_coloc exportfile graph colocll in
 
   ()

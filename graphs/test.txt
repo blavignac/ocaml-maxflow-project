@@ -1,5 +1,5 @@
-leo 20
+leo 10
+luke 20
 lucy 0
-adsfa 10
-john 20
-luke 0
+lionel 20
+leonidas 0
