@@ -4,4 +4,4 @@ outfile
 *.exe
 .vscode/
 *.svg
-
+*.txt

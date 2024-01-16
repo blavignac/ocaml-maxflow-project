@@ -1,5 +1,6 @@
 leo 10
 luke 20
-lucy 0
-lionel 20
-leonidas 0
+john 0
+cel 0
+remi 20
+suzane 0

@@ -42,17 +42,27 @@ let _add_in_out graph coloc_list =
   List.fold_left (fun gr {name=_;id=i;value=v;} -> if v > 0 then Tools.add_arc  gr i 1 v  else (if v = 0 then gr else Tools.add_arc  gr 0 i (abs v))) graph coloc_list
 ;;
 
+let _add_in_between2 graph coloc_list  _total= 
+  let rec loop graph1 coloc_ll =
+    match coloc_ll with 
+    | {name=_;id=i;value=v;}::rest when v < 0 -> loop (List.fold_left (fun gr {name=_;id=i1;value=v1;} -> if v1 >= 0 then Tools.add_arc gr i i1 (abs v) else gr) graph1 coloc_list) rest
+    | {name=_;id=_;value=v;}::rest when v >= 0 -> loop graph1 rest
+    | [] -> graph1
+    | _ -> graph1
+  in
+  loop graph coloc_list;;
+
 let _add_in_between graph coloc_list total =
   let rec loop graph1 coloc_ll =
     match coloc_ll with
-    | {name=_;id=i;value=_;}::rest -> loop (List.fold_left (fun gr {name=_;id=i1;value=_;} -> Tools.add_arc (Tools.add_arc gr i i1 (total)) i1 i (total)) graph1 rest) rest
+    | {name=_;id=i;value=_;}::rest -> loop (List.fold_left (fun gr {name=_;id=i1;value=_;} -> Tools.add_arc (Tools.add_arc gr i i1 (total)) i1 i (total)) graph1 rest) rest 
     | [] -> graph1
   in
   loop graph coloc_list
 ;;
 
 let strip_graph graph =
-  let graph1 = Graph.n_fold graph (fun g n -> (Printf.printf "wow1 %d" n);if n = 1 || n = 0 then g else Graph.new_node g n) Graph.empty_graph
+  let graph1 = Graph.n_fold graph (fun g n -> if n = 1 || n = 0 then g else Graph.new_node g n) Graph.empty_graph
 in
   let graph2 = 
     Graph.e_fold graph (
@@ -94,7 +104,7 @@ let build_graph coloc_list _total =
   let graph = List.fold_left (fun gr {name=_;id;_} -> Graph.new_node gr id) (Graph.new_node (Graph.new_node Graph.empty_graph 0) 1) coloc_list 
 in
   let graph = _add_in_out graph coloc_list in
-  let graph = _add_in_between graph coloc_list _total in
+  let graph = _add_in_between2 graph coloc_list _total in
   let graph = Fordfulkerson.flow_graph (Tools.int_to_string_graph graph) in
   let (graph,_) = Fordfulkerson.ford_fulkerson graph 0 1 in
   graph
